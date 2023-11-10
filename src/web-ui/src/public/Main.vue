@@ -39,8 +39,7 @@
 
         <div v-if="!isLoadingRecommendations && !userRecommendationsTitle" class="text-left">
           <em>
-            Personalized recommendations do not appear to be enabled for this instance of the storefront yet. Please complete the Personalization workshop labs to add personalized capabilities.
-            In the meantime, the default user experience will provide product information directly from the catalog.
+            Personalized recommendations disabled
           </em>
         </div>
       </section>
