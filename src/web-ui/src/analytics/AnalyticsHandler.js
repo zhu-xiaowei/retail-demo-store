@@ -1039,19 +1039,19 @@ export const AnalyticsHandler = {
     },
 
     segmentEnabled() {
-        return import.meta.env.VITE_SEGMENT_WRITE_KEY && import.meta.env.VITE_SEGMENT_WRITE_KEY != 'NONE';
+        return false;
     },
 
     amplitudeEnabled() {
-        return import.meta.env.VITE_AMPLITUDE_API_KEY && import.meta.env.VITE_AMPLITUDE_API_KEY != 'NONE';
+        return false;
     },
 
     optimizelyEnabled() {
-        return !!import.meta.env.VITE_OPTIMIZELY_SDK_KEY && import.meta.env.VITE_OPTIMIZELY_SDK_KEY != 'NONE';
+        return false;
     },
 
     mParticleEnabled() {
-        return import.meta.env.VITE_MPARTICLE_API_KEY && import.meta.env.VITE_MPARTICLE_API_KEY != 'NONE';
+        return false;
     },
 
     isOptimizelyDatafileSynced(expectedRevisionNumber) {
@@ -1070,6 +1070,6 @@ export const AnalyticsHandler = {
     },
 
     googleAnalyticsEnabled() {
-        return import.meta.env.VITE_GOOGLE_ANALYTICS_ID && import.meta.env.VITE_GOOGLE_ANALYTICS_ID != 'NONE';
+        return false;
     },
 }
