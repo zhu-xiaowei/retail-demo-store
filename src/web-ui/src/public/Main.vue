@@ -181,12 +181,10 @@ export default {
           this.featureUserRecs
         );
       }
-
       if (response.headers) {
         const experimentName = response.headers['x-experiment-name'];
         const personalizeRecipe = response.headers['x-personalize-recipe'];
-
-        if (experimentName || personalizeRecipe) {
+        // if (experimentName || personalizeRecipe) {
           if (experimentName) this.recommendationsExperiment = `Active experiment: ${experimentName}`;
 
           if (personalizeRecipe) {
@@ -198,13 +196,14 @@ export default {
           } else if (experimentName) {
             this.userRecommendationsTitle = 'Recommended for you';
           }
+          this.userRecommendationsTitle = 'Popular Products';
 
           this.userRecommendations = response.data;
 
           if (this.userRecommendations.length > 0 && 'experiment' in this.userRecommendations[0]) {
             AnalyticsHandler.identifyExperiment(this.user, this.userRecommendations[0].experiment);
           }
-        }
+        // }
       }
 
       this.isLoadingRecommendations = false;
