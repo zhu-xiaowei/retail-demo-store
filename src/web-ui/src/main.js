@@ -3,7 +3,7 @@
 import { createApp } from 'vue'
 import App from './App.vue'
 import router from './router';
-import { Auth, Logger, Analytics, Interactions, AWSPinpointProvider, AmazonPersonalizeProvider } from 'aws-amplify';
+import { Auth, Logger, Analytics, Interactions, AmazonPersonalizeProvider } from 'aws-amplify';
 import store from '@/store/store';
 import Amplitude from 'amplitude-js'
 import mParticle from '@mparticle/web-sdk';
@@ -11,16 +11,26 @@ import AmplifyStore from '@/store/store';
 import VueGtag from "vue-gtag";
 
 import './styles/tokens.css'
+import { ClickstreamAnalytics, SendMode } from "@aws/clickstream-web";
+
+if (localStorage.getItem("clickstream_appId") !== null) {
+  ClickstreamAnalytics.init({
+    appId: localStorage.getItem("clickstream_appId"),
+    endpoint: localStorage.getItem("clickstream_endpoint"),
+    isLogEvents: true,
+    sendMode: SendMode.Batch,
+  })
+}
 
 // Base configuration for Amplify
 const amplifyConfig = {
   Auth: {
-      identityPoolId: import.meta.env.VITE_AWS_IDENTITY_POOL_ID,
-      region: import.meta.env.VITE_AWS_REGION,
-      identityPoolRegion: import.meta.env.VITE_AWS_REGION,
-      userPoolId: import.meta.env.VITE_AWS_USER_POOL_ID,
-      userPoolWebClientId: import.meta.env.VITE_AWS_USER_POOL_CLIENT_ID,
-      mandatorySignIn: false,
+    identityPoolId: import.meta.env.VITE_AWS_IDENTITY_POOL_ID,
+    region: import.meta.env.VITE_AWS_REGION,
+    identityPoolRegion: import.meta.env.VITE_AWS_REGION,
+    userPoolId: import.meta.env.VITE_AWS_USER_POOL_ID,
+    userPoolWebClientId: import.meta.env.VITE_AWS_USER_POOL_CLIENT_ID,
+    mandatorySignIn: false,
   },
   Analytics: {
     disabled: false,
@@ -43,9 +53,9 @@ const amplifyConfig = {
 }
 
 if (AmplifyStore.state.user?.id) {
-    amplifyConfig.Analytics.AWSPinpoint.endpoint = {
-        userId: AmplifyStore.state.user.id
-    }
+  amplifyConfig.Analytics.AWSPinpoint.endpoint = {
+    userId: AmplifyStore.state.user.id
+  }
 }
 
 // Only add Personalize event tracking if configured.
@@ -71,8 +81,8 @@ if (import.meta.env.VITE_AMPLITUDE_API_KEY && import.meta.env.VITE_AMPLITUDE_API
 // Initialize mParticle if a valid API key is specified.
 if (import.meta.env.VITE_MPARTICLE_API_KEY && import.meta.env.VITE_MPARTICLE_API_KEY != 'NONE') {
   const mParticleConfig = {
-      isDevelopmentMode: true,
-      logLevel: "verbose"
+    isDevelopmentMode: true,
+    logLevel: "verbose"
   };
   mParticle.init(import.meta.env.VITE_MPARTICLE_API_KEY, mParticleConfig);
 }
@@ -92,7 +102,7 @@ Auth.currentAuthenticatedUser()
   })
   .then((user) => logger.debug(user))
   .catch(err => logger.debug(err))
-  
+
 const app = createApp(App)
 app.use(router)
 app.use(store)
@@ -106,8 +116,7 @@ if (import.meta.env.VITE_GOOGLE_ANALYTICS_ID && import.meta.env.VITE_GOOGLE_ANAL
       }
     }
   }, router);
-}
-else {
+} else {
   app.use(VueGtag, {
     enabled: false,
     disableScriptLoad: true

@@ -19,6 +19,7 @@
   },
   "dependencies": {
     "@aws-amplify/ui-vue": "^3.1.21",
+    "@aws/clickstream-web": "^0.6.0",
     "@mparticle/web-sdk": "^2.23.2",
     "@optimizely/optimizely-sdk": "^4.9.2",
     "amplitude-js": "^5.8.0",
