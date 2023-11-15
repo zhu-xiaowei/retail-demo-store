@@ -179,6 +179,7 @@ async function getUser() {
 
 const Main = () => import('@/public/Main.vue')
 const Welcome = () => import('@/public/Welcome.vue')
+const Configure = () => import('@/public/Configure.vue')
 const ProductDetail = () => import('@/public/ProductDetail.vue')
 const CategoryDetail = () => import('@/public/CategoryDetail.vue')
 const Live = () => import('@/public/Live.vue')
@@ -199,6 +200,12 @@ const router = createRouter({
       path: '/welcome',
       name: 'Welcome',
       component: Welcome,
+      meta: { requiresAuth: false },
+    },
+    {
+      path: '/configure',
+      name: 'Configure',
+      component: Configure,
       meta: { requiresAuth: false },
     },
     {

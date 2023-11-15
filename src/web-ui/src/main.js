@@ -3,12 +3,9 @@
 import { createApp } from 'vue'
 import App from './App.vue'
 import router from './router';
-import { Auth, Logger, Analytics, Interactions, AmazonPersonalizeProvider } from 'aws-amplify';
+import { Auth, Logger, Analytics, Interactions } from 'aws-amplify';
 import store from '@/store/store';
-import Amplitude from 'amplitude-js'
-import mParticle from '@mparticle/web-sdk';
 import AmplifyStore from '@/store/store';
-import VueGtag from "vue-gtag";
 
 import './styles/tokens.css'
 import { ClickstreamAnalytics, SendMode } from "@aws/clickstream-web";
@@ -58,35 +55,6 @@ if (AmplifyStore.state.user?.id) {
   }
 }
 
-// Only add Personalize event tracking if configured.
-if (import.meta.env.VITE_PERSONALIZE_TRACKING_ID && import.meta.env.VITE_PERSONALIZE_TRACKING_ID != 'NONE') {
-  // Amazon Personalize event tracker.
-  Analytics.addPluggable(new AmazonPersonalizeProvider());
-
-  amplifyConfig.Analytics.AmazonPersonalize = {
-    trackingId: import.meta.env.VITE_PERSONALIZE_TRACKING_ID,
-    region: import.meta.env.VITE_AWS_REGION,
-    // OPTIONAL - The number of events to be deleted from the buffer when flushed.
-    flushSize: 5,
-    // OPTIONAL - The interval in milliseconds to perform a buffer check and flush if necessary.
-    flushInterval: 2000, // 2s
-  }
-}
-
-// Initialize Amplitude if a valid API key is specified.
-if (import.meta.env.VITE_AMPLITUDE_API_KEY && import.meta.env.VITE_AMPLITUDE_API_KEY != 'NONE') {
-  Amplitude.getInstance().init(import.meta.env.VITE_AMPLITUDE_API_KEY)
-}
-
-// Initialize mParticle if a valid API key is specified.
-if (import.meta.env.VITE_MPARTICLE_API_KEY && import.meta.env.VITE_MPARTICLE_API_KEY != 'NONE') {
-  const mParticleConfig = {
-    isDevelopmentMode: true,
-    logLevel: "verbose"
-  };
-  mParticle.init(import.meta.env.VITE_MPARTICLE_API_KEY, mParticleConfig);
-}
-
 // Set the configuration
 Auth.configure(amplifyConfig);
 Analytics.configure(amplifyConfig);
@@ -106,21 +74,5 @@ Auth.currentAuthenticatedUser()
 const app = createApp(App)
 app.use(router)
 app.use(store)
-
-if (import.meta.env.VITE_GOOGLE_ANALYTICS_ID && import.meta.env.VITE_GOOGLE_ANALYTICS_ID != 'NONE') {
-  app.use(VueGtag, {
-    config: {
-      id: import.meta.env.VITE_GOOGLE_ANALYTICS_ID,
-      params: {
-        send_page_view: false
-      }
-    }
-  }, router);
-} else {
-  app.use(VueGtag, {
-    enabled: false,
-    disableScriptLoad: true
-  });
-}
 
 app.mount('#app')

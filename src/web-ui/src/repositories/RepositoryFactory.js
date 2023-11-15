@@ -9,8 +9,10 @@ import RecommendationsRepository from "./recommendationsRepository.js"
 import SearchRepository from "./searchRepository.js"
 import VideosRepository from "./videosRepository.js"
 import LocationRepository from "./locationRepository.js"
+import WorkshopRepository from "@/repositories/workshopRepository";
 
 const repositories = {
+    workshop: WorkshopRepository,
     products: ProductsRepository,
     users: UsersRepository,
     carts: CartsRepository,

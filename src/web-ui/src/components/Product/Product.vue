@@ -39,6 +39,7 @@ import { formatPrice } from '@/util/formatPrice';
 
 import FiveStars from '../../components/FiveStars/FiveStars.vue';
 import FenixList from '@/components/Fenix/FenixList.vue';
+import { AnalyticsHandler } from '@/analytics/AnalyticsHandler';
 
 const getFullExperimentType = (type) => {
   switch (type) {
@@ -69,13 +70,32 @@ export default {
     promotionName: { type: String, required: false },
     feature: { type: String, required: true },
   },
-
+  mounted() {
+    const options = {
+      root: null,
+      rootMargin: '0px',
+      threshold: 0.5,
+    };
+    const observer = new IntersectionObserver(this.handleIntersection, options);
+    const productCard = this.$el;
+    observer.observe(productCard);
+  },
   data() {
     return {
       fenixenablePDP : import.meta.env.VITE_FENIX_ENABLED_PDP,
     };
   },
   computed: {
+    handleIntersection() {
+      return (entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            // Record Product exposure event
+            AnalyticsHandler.productExposure(this.product,this.feature)
+          }
+        });
+      };
+    },
     fenixcurrentvariant(){
       return this.product.id;
     },

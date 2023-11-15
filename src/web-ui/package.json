@@ -20,9 +20,6 @@
   "dependencies": {
     "@aws-amplify/ui-vue": "^3.1.21",
     "@aws/clickstream-web": "^0.6.0",
-    "@mparticle/web-sdk": "^2.23.2",
-    "@optimizely/optimizely-sdk": "^4.9.2",
-    "amplitude-js": "^5.8.0",
     "autoprefixer": "^10.4.13",
     "aws-amplify": "^5.3.5",
     "axios": "^1.2.4",
@@ -39,7 +36,8 @@
     "vue-router": "^4.2.4",
     "vuex": "^4.1.0",
     "vuex-persistedstate": "^4.1.0",
-    "workbox-webpack-plugin": "^6.5.4"
+    "workbox-webpack-plugin": "^6.5.4",
+    "firebase": "^10.6.0"
   },
   "devDependencies": {
     "@layer0/cli": "^4.19.7",
