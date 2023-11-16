@@ -48,6 +48,8 @@ export default {
       projectId: '',
       appId: '',
       endpoint: '',
+      bucketName: '',
+      pipelineRegion: '',
       isSubmitEnable: false,
     };
   },
@@ -62,6 +64,8 @@ export default {
         this.projectId = appInfo.projectId
         this.appId = appInfo.appId
         this.endpoint = appInfo.endpoint
+        this.bucketName = appInfo.bucketName
+        this.pipelineRegion = appInfo.pipelineRegion
         this.isSubmitEnable = true
       } else {
         this.isSubmitEnable = false
@@ -70,7 +74,7 @@ export default {
     async submit() {
       if (!this.isSubmitEnable) return
       // update config
-      const { status: status } = await WorkshopRepository.updateConfigure(this.projectId);
+      const { status: status } = await WorkshopRepository.updateConfigure(this.projectId, this.bucketName, this.pipelineRegion);
       if (status !== 200) {
         alert("Update EMR configuration failed.")
         return

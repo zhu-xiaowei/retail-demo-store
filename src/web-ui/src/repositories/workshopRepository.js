@@ -19,9 +19,9 @@ export default {
   getAppInfo() {
     return connection.get(`api/getAppInfo`)
   },
-  updateConfigure(projectId) {
+  updateConfigure(projectId, bucketName, pipelineRegion) {
     if (!projectId || projectId.length === 0)
       throw "productID required"
-    return connection.get(`api/updateConfigure?projectId=${ projectId }`)
+    return connection.get(`api/updateConfigure?projectId=${ projectId }&bucketName=${ bucketName }&pipelineRegion=${ pipelineRegion }`)
   },
 }
