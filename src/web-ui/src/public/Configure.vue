@@ -80,11 +80,8 @@ export default {
         return
       }
       // send event
-      for (let i = 0; i < 5; i++) {
-        const { status: result } = await WorkshopRepository.createEvent(this.appId, this.endpoint);
-        if (result !== 200) {
-          return
-        }
+      for (let i = 0; i < 2; i++) {
+        WorkshopRepository.createEvent(this.appId, this.endpoint);
       }
       // config SDK
       localStorage.setItem("clickstream_appId", this.appId)
