@@ -3,7 +3,7 @@
           backgroundColor="var(--aws-squid-ink)">
     <div class="container mb-2 text-left">
       <h1 class="heading my-5 text-center">Configure SDK & Send example data</h1>
-      <span v-if="isSubmitEnable">Please check the below parameters of the application are you just created. then click the submit button.</span>
+      <span v-if="isSubmitEnable">Please check the below parameters of the application are you just created. Then click the submit button.</span>
       <span v-else>Please create your project and application first.</span>
 
       <div class="mt-2 mb-4 my-sm-5 d-flex flex-column align-items-center align-items-sm-start">
@@ -48,8 +48,6 @@ export default {
       projectId: '',
       appId: '',
       endpoint: '',
-      bucketName: '',
-      pipelineRegion: '',
       isSubmitEnable: false,
     };
   },
@@ -64,8 +62,6 @@ export default {
         this.projectId = appInfo.projectId
         this.appId = appInfo.appId
         this.endpoint = appInfo.endpoint
-        this.bucketName = appInfo.bucketName
-        this.pipelineRegion = appInfo.pipelineRegion
         this.isSubmitEnable = true
       } else {
         this.isSubmitEnable = false
@@ -74,7 +70,7 @@ export default {
     async submit() {
       if (!this.isSubmitEnable) return
       // update config
-      const { status: status } = await WorkshopRepository.updateConfigure(this.projectId, this.bucketName, this.pipelineRegion);
+      const { status: status } = await WorkshopRepository.updateConfigure(this.projectId);
       if (status !== 200) {
         alert("Update EMR configuration failed.")
         return

@@ -12,6 +12,10 @@
       <i class="fa fa-bars d-inline d-lg-none"></i>
     </button>
     <div class="dropdown-menu" aria-labelledby="categories-dropdown-anchor">
+      <router-link class="dropdown-item" :to="`/configure`">Configure Clickstream</router-link>
+      <hr />
+      <router-link class="dropdown-item" :to="`/live`">Live Streams</router-link>
+      <hr />
       <div v-if="!categories" class="text-center">
         <LoadingFallback></LoadingFallback>
       </div>
@@ -25,13 +29,7 @@
           >{{ formattedCategories[i] }}</router-link
         >
       </template>
-
-      <hr />
-      <router-link class="dropdown-item" :to="`/live`">Live Streams</router-link>
-      <hr />
       <router-link class="dropdown-item" :to="{name:'Collections'}">In-Store View</router-link>
-      <hr />
-      <router-link class="dropdown-item" :to="`/configure`">Configure Clickstream</router-link>
     </div>
   </div>
 </template>
