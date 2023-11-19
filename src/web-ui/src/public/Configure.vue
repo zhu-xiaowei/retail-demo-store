@@ -6,7 +6,7 @@
       <span v-if="isSubmitEnable">Please check the below parameters of the application are you just created. Then click the submit button.</span>
       <span v-else>Please create your project and application first.</span>
 
-      <div class="mt-2 mb-4 my-sm-5 d-flex flex-column align-items-center align-items-sm-start">
+      <div class="mt-2 mb-4 my-sm-5 d-flex flex-column align-items-center align-items-sm-end">
         <div class="input-field input-group">
           <label>ProjectId</label>
           <input type="text" class="form-control" v-model="projectId">
@@ -20,12 +20,12 @@
           <input type="text" class="form-control" v-model="endpoint">
         </div>
         <div class="d-flex flex-column flex-sm-row align-items-center">
-          <button class=" mt-3 mt-sm-0 ml-sm-3 btn btn-primary"
+          <button class=" mt-3 mt-sm-0 btn btn-primary"
                   :class="{'create-account-disable': !isSubmitEnable, 'create-account': isSubmitEnable}"
                   @click.prevent="submit">Submit
           </button>
         </div>
-        <router-link to="/" class="mt-3 skip-login btn btn-link">Skip configure</router-link>
+        <router-link to="/" class="mt-3 skip-login btn btn-link" style="padding-right: 0;">Skip configure</router-link>
       </div>
     </div>
   </Layout>
@@ -66,18 +66,15 @@ export default {
       } else {
         this.isSubmitEnable = false
       }
+      console.log(`ProjectId: ${ this.projectId }, AppId: ${ this.appId }, Endpoint: ${ this.endpoint }`);
     },
     async submit() {
       if (!this.isSubmitEnable) return
-      // update config
-      const { status: status } = await WorkshopRepository.updateConfigure(this.projectId);
-      if (status !== 200) {
-        alert("Update EMR configuration failed.")
-        return
-      }
       // send event
-      for (let i = 0; i < 2; i++) {
-        WorkshopRepository.createEvent(this.appId, this.endpoint);
+      const { status: status } = await WorkshopRepository.createEvent(this.appId, this.endpoint);
+      if (status !== 200) {
+        alert("Create event failed.")
+        return
       }
       // config SDK
       localStorage.setItem("clickstream_appId", this.appId)
@@ -88,7 +85,6 @@ export default {
         isLogEvents: true,
         sendMode: SendMode.Batch,
       })
-      console.log(`ProjectId: ${ this.projectId }, AppId: ${ this.appId }, Endpoint: ${ this.endpoint }`);
       this.renderSubmitConfirmation()
     },
     renderSubmitConfirmation() {

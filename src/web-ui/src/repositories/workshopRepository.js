@@ -13,15 +13,10 @@ const connection = axios.create({
 })
 
 export default {
-  createEvent(appId, endpoint) {
-    return connection.get(`api/createEvent?appId=${ appId }&endpoint=${ endpoint }`)
+  createEvent(projectId, appId, endpoint) {
+    return connection.get(`api/createEvent?projectId=${ projectId }&appId=${ appId }&endpoint=${ endpoint }`)
   },
   getAppInfo() {
     return connection.get(`api/getAppInfo`)
-  },
-  updateConfigure(projectId) {
-    if (!projectId || projectId.length === 0)
-      throw "projectId required"
-    return connection.get(`api/updateConfigure?projectId=${ projectId }`)
   },
 }
