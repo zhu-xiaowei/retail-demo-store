@@ -22,7 +22,7 @@
         <div class="d-flex flex-column flex-sm-row align-items-center">
           <button class=" mt-3 mt-sm-0 btn btn-primary"
                   :class="{'create-account-disable': !isSubmitEnable, 'create-account': isSubmitEnable}"
-                  @click.prevent="submit">Submit
+                  @click.prevent="submit">Confirm
           </button>
         </div>
         <router-link to="/" class="mt-3 skip-login btn btn-link" style="padding-right: 0;">Skip configure</router-link>
