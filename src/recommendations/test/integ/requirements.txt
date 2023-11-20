@@ -7,4 +7,4 @@ black==22.1.0
 pytest-watch==4.2.0
 python-dotenv
 validators
-../../testing
+../../../testing
