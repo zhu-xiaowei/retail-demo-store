@@ -8,6 +8,10 @@
 
       <div class="mt-2 mb-4 my-sm-5 d-flex flex-column align-items-center align-items-sm-end">
         <div class="input-field input-group">
+          <label>ProjectId</label>
+          <input type="text" class="form-control" v-model="projectId">
+        </div>
+        <div class="input-field input-group">
           <label>AppId</label>
           <input type="text" class="form-control" v-model="appId">
         </div>
@@ -41,6 +45,7 @@ export default {
   },
   data() {
     return {
+      projectId: '',
       appId: '',
       endpoint: '',
       isSubmitEnable: false,
@@ -53,7 +58,7 @@ export default {
     async fetchData() {
       const { data: appInfo } = await WorkshopRepository.getAppInfo();
       console.log(appInfo)
-      if (appInfo && appInfo.projectId !== "" && appInfo.projectId !== "") {
+      if (appInfo && appInfo.projectId !== "" && appInfo.projectId !== "" && appInfo.projectId !== "") {
         this.projectId = appInfo.projectId
         this.appId = appInfo.appId
         this.endpoint = appInfo.endpoint
@@ -61,12 +66,12 @@ export default {
       } else {
         this.isSubmitEnable = false
       }
-      console.log(`AppId: ${ this.appId }, Endpoint: ${ this.endpoint }`);
+      console.log(`ProjectId: ${ this.projectId }, AppId: ${ this.appId }, Endpoint: ${ this.endpoint }`);
     },
     async submit() {
       if (!this.isSubmitEnable) return
       // send event
-      const { status: status } = await WorkshopRepository.createEvent(this.appId, this.endpoint);
+      const { status: status } = await WorkshopRepository.createEvent(this.projectId, this.appId, this.endpoint);
       if (status !== 200) {
         alert("Create event failed.")
         return
