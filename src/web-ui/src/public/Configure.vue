@@ -3,8 +3,8 @@
           backgroundColor="var(--aws-squid-ink)">
     <div class="container mb-2 text-left">
       <h1 class="heading my-5 text-center">Configure SDK & Send example data</h1>
-      <span v-if="isSubmitEnable">Please check the below parameters of the application are you just created. Then click the submit button.</span>
-      <span v-else>Please create your project and application first.</span>
+      <span v-if="isSubmitEnable">Please check the below parameters of the application are you just added. Then click the submit button.</span>
+      <span v-else>Please add your application first.</span>
 
       <div class="mt-2 mb-4 my-sm-5 d-flex flex-column align-items-center align-items-sm-end">
         <div class="input-field input-group">
