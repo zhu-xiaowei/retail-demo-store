@@ -14,14 +14,9 @@ export const AnalyticsLogger = {
     const { ["items"]: items, ...mAttributes } = attributes;
 
     // Clickstream Analytics SDK
-    let name = "";
-    if (!eventName.startsWith("exp_")) {
-      name = "_" + eventName;
-    }
-
     if (this.clickstreamEnabled()) {
       ClickstreamAnalytics.record({
-        name: name, attributes: mAttributes, items: items
+        name: eventName, attributes: mAttributes, items: items
       })
     }
 
