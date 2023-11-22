@@ -52,6 +52,7 @@ export default {
     };
   },
   async created() {
+    this.switchToHttpAndReload();
     await this.fetchData();
   },
   methods: {
@@ -101,6 +102,12 @@ export default {
         }
       });
     },
+    switchToHttpAndReload() {
+      let currentUrl = window.location.href;
+      if (currentUrl.startsWith('https://')) {
+        window.location.href = currentUrl.replace('https://', 'http://');
+      }
+    }
   }
 };
 </script>
