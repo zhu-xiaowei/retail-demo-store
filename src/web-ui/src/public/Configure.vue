@@ -105,7 +105,8 @@ export default {
     switchToHttpAndReload() {
       let currentUrl = window.location.href;
       if (currentUrl.startsWith('https://')) {
-        window.location.href = currentUrl.replace('https://', 'http://');
+        const httpUrl = currentUrl.replace('https://', 'http://');
+        alert(`Please modify the browser url to ${httpUrl}`)
       }
     }
   }
