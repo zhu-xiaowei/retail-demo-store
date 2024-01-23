@@ -2,15 +2,11 @@
   <Layout :showNav="false" :showFooter="false" :showTextAlerts="false" :showDemoGuide="false"
           backgroundColor="var(--aws-squid-ink)">
     <div class="container mb-2 text-left">
-      <h1 class="heading my-5 text-center">Configure SDK & Send example data</h1>
-      <span v-if="isSubmitEnable">Please check the below parameters of the application are you just added. Then click the submit button.</span>
+      <h1 class="heading my-5 text-center">Configure SDK</h1>
+      <span v-if="isSubmitEnable">Please input the application's appId and endpoint you just added. Then click the submit button.</span>
       <span v-else>Please add your application first.</span>
 
       <div class="mt-2 mb-4 my-sm-5 d-flex flex-column align-items-center align-items-sm-end">
-        <div class="input-field input-group">
-          <label>ProjectId</label>
-          <input type="text" class="form-control" v-model="projectId">
-        </div>
         <div class="input-field input-group">
           <label>AppId</label>
           <input type="text" class="form-control" v-model="appId">
@@ -33,11 +29,9 @@
 
 <script>
 import Layout from '@/components/Layout/Layout.vue'
-import { RepositoryFactory } from "@/repositories/RepositoryFactory";
 import { ClickstreamAnalytics, SendMode } from "@aws/clickstream-web";
 import swal from "sweetalert";
 
-const WorkshopRepository = RepositoryFactory.get('workshop');
 export default {
   name: 'Configure',
   components: {
@@ -45,38 +39,15 @@ export default {
   },
   data() {
     return {
-      projectId: '',
       appId: '',
       endpoint: '',
-      isSubmitEnable: false,
+      isSubmitEnable: true,
     };
   },
   async created() {
-    this.switchToHttpAndReload();
-    await this.fetchData();
   },
   methods: {
-    async fetchData() {
-      const { data: appInfo } = await WorkshopRepository.getAppInfo();
-      console.log(appInfo)
-      if (appInfo && appInfo.projectId !== "" && appInfo.projectId !== "" && appInfo.projectId !== "") {
-        this.projectId = appInfo.projectId
-        this.appId = appInfo.appId
-        this.endpoint = appInfo.endpoint
-        this.isSubmitEnable = true
-      } else {
-        this.isSubmitEnable = false
-      }
-      console.log(`ProjectId: ${ this.projectId }, AppId: ${ this.appId }, Endpoint: ${ this.endpoint }`);
-    },
     async submit() {
-      if (!this.isSubmitEnable) return
-      // send event
-      const { status: status } = await WorkshopRepository.createEvent(this.projectId, this.appId, this.endpoint);
-      if (status !== 200) {
-        alert("Create event failed.")
-        return
-      }
       // config SDK
       localStorage.setItem("clickstream_appId", this.appId)
       localStorage.setItem("clickstream_endpoint", this.endpoint)
@@ -90,7 +61,7 @@ export default {
     },
     renderSubmitConfirmation() {
       swal({
-        title: 'Configure Success',
+        title: 'Clickstream SDK Configure Success',
         icon: 'success',
         buttons: {
           startShopping: 'Start Shopping',
